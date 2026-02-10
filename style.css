@@ -68,6 +68,7 @@ section > div {
   background-color: white;
   border-radius: 12px;
   padding: 30px;
+  overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   border-left: 5px solid #0071C5;
@@ -108,12 +109,49 @@ section > div img {
   display: block;
 }
 
-/* Card description text */
+/* Card description text — hidden by default, revealed on hover (overlay) */
 section > div p {
   font-size: 14px;
-  line-height: 1.8;
-  color: #666;
+  line-height: 1.6;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.95);
+  color: #fff;
+  padding: 16px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.28s ease, opacity 0.28s ease;
+  pointer-events: none;
   font-weight: 400;
+}
+
+/* Reveal paragraph on hover for pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  section > div:hover p {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* On touch devices and small screens, show details inline (no hover) */
+@media (max-width: 768px), (hover: none) {
+  section > div p {
+    position: static;
+    transform: none;
+    opacity: 1;
+    background: transparent;
+    color: #666;
+    padding: 0;
+    border-radius: 0;
+    margin-top: 12px;
+    pointer-events: auto;
+  }
 }
 
 /* Instruction text at the bottom */
@@ -189,8 +227,8 @@ body > p {
     max-width: 100%;
     overflow-x: auto;
     scroll-behavior: smooth;
+    flex-wrap: nowrap;
   }
-  
   section > div {
     flex: 0 0 320px;
   }
